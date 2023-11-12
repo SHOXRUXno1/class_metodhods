@@ -26,11 +26,11 @@ class Talaba(Shaxs):
 
     __talaba_soni = 0
 
-    def __init__(self, ism, familiya, passport, tyil):
+    def __init__(self, ism, familiya, passport, tyil, bosqich):
         """Talabaning xususiyatlari"""
-        super().__init__(ism, familiya, passport, tyil)
+        super().__init__(ism, familiya, passport, tyil, )
         self.__id = uuid4()
-        self.bosqich = 1
+        self.bosqich = bosqich
         Talaba.__talaba_soni += 1
 
     @classmethod
@@ -45,19 +45,28 @@ class Talaba(Shaxs):
         """Talabaning o'qish bosqichi"""
         return self.bosqich
 
-    def get_info(self):
+    def __le__(self, boshqa_talabalar):
+        return self.bosqich < boshqa_talabalar.bosqich
+
+    def __eq__(self, boshqa_talabalar):
+        return self.bosqich == boshqa_talabalar.bosqich
+
+    def __lt__(self, boqshqa_talabalar):
+        return self.bosqich < boqshqa_talabalar.bosqich
+
+    def __repr__(self):
         """Talaba haqida ma'lumot"""
         info = f"{self.ism} {self.familiya}. "
         info += f"{self.get_bosqich()}-bosqich. ID raqami: {self.__id}"
         return info
 
 
-Talaba1 = Talaba(f"Shoxrux", "Xasanov", "adAd", 2009, )
-Talaba2 = Talaba(f"Azizbek", "Alimov", "aaa242", 2001, )
-Talaba3 = Talaba(f"Fazliddin", "Dabuluov", "adsdaa242", 2005)
-Talaba4 = Talaba(f"Lziz", "Raxmonov", "aaa242", 2008, )
-print(Talaba1.get_talabalarsoni())
-print(Talaba1.get_info())
-print(Talaba2.get_info())
-print(Talaba3.get_info())
-print(Talaba4.get_info())
+talaba1 = Talaba("Shoxurx", "Xasanov", "fsrrf242", 2009, 1)
+talaba2 = Talaba("Xumoyun", "Baxadirov", "adcd213", 2009, 1)
+print(talaba1 == talaba2)
+talaba3 = Talaba("Aziz", "Lazizov", "fsrrfrf", 2005, 3)
+talaba4 = Talaba("Temur", "Tajibayev", "fsrrfrf", 2004, 4)
+print(talaba3 <= talaba4)
+talaba5 = Talaba("Jonibek", "Uralov", "3grgq3", 2001, 4)
+print(talaba5>talaba1)
+print(talaba3<talaba1)
